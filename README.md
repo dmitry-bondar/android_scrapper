@@ -10,10 +10,12 @@
 
 
 ## Запуск скраппера
-Добавить в код строки 
-1. `u2.connect(`adb devices ip address`)`
+Добавить в код строки: 
+1. `u2.connect(adb devices ip address)`
 2. `logger.log('u2 connect info {0}'.format(d.info) )`
-3. запуск скрипта: `python domain.py regionId taskId --log`
+
+запуск скрипта: 
+`python domain.py regionId taskId --log`
 
 ## Запуск скраппера в тестовом режиме с использованем UI Inspector
 запуск UI Inspector:  `uiauto.dev`
