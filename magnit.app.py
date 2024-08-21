@@ -189,4 +189,5 @@ while progress < 1:
     time.sleep(10)
 
 Product.sendToSystem()
+d.app_stop_all()
 logger.log("Session complete")
