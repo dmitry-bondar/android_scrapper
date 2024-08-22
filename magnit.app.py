@@ -43,7 +43,7 @@ logger.log('u2 connect info {0}'.format(d.info) )
 
 def store():
     while not storeName:
-        logger.log(storeName)
+        logger.log("Собираем по адресу " + storeName)
         time.sleep(1)
     if d.xpath("//android.widget.TextView[@bounds='[121,95][963,153]']").click_exists(timeout=0.1):
         logger.log('Click address')
@@ -61,7 +61,7 @@ def store():
 def openApp():
     if d.xpath('//android.widget.TextView[@text="Магнит"]').click_exists(timeout=0.1):
         logger.log("Magnit  button click")
-    time.sleep(6)
+    time.sleep(8)
     if d.xpath('//android.widget.TextView[@text="В магазине"]').click_exists(timeout=0.1):
         logger.log("Catalog button click")
     time.sleep(2)
@@ -109,7 +109,7 @@ def scrapeCategory(chunk, categoryId):
                         "rating": countRewievs[0],
                         "reviewsCount": countRewievs[1] if len(countRewievs) > 1 else '',
                         "url": chunk["url"],
-                        "categories": categoryId,
+                        "categories": [categoryId],
                         "availability": 'InStock',
                         "marketId": domain,
                         "regionId": regionId,
@@ -136,7 +136,7 @@ def scrapeCategory(chunk, categoryId):
                         "rating": countRewievs[0],
                         "reviewsCount": countRewievs[1] if len(countRewievs) > 1 else '',
                         "url": chunk["url"],
-                        "categories": categoryId,
+                        "categories": [categoryId],
                         "availability": 'InStock',
                         "marketId": domain,
                         "regionId": regionId,
@@ -162,6 +162,7 @@ def scrapeCategory(chunk, categoryId):
 
 def main(chunk):
     categoryId = re.sub('https:\/\/magnit.ru\/catalog\/', '', chunk["url"], 0, re.MULTILINE).strip()
+    logger.log("Собираем категорию " + categoryId)
     openApp()
     store()
     findCategory(categoryId)
