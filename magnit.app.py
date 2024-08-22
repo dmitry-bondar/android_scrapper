@@ -37,7 +37,7 @@ chunkIds = []
 chunkUrl = None
 article = None
 
-d = u2.connect('192.168.56.102:5555')  # connect to device
+d = u2.connect('192.168.56.101:5555')  # connect to device
 logger.log('u2 connect info {0}'.format(d.info) )
 
 
@@ -84,8 +84,8 @@ def scrapeCategory(chunk, categoryId):
     for textBlock in d.xpath('//android.widget.ScrollView//android.widget.TextView').all():
         if re.search("товар", textBlock.text):
             textContProducts = textBlock.text
-            reg = '\D+'
-            countProducts = int(re.sub(reg, '', textContProducts))
+            reg = re.sub( '\D+', '', textContProducts)
+            countProducts = int(reg)
             swipeCount = int(countProducts / 4)
 
     d.swipe(0, 800, 0, 0, 0.5)

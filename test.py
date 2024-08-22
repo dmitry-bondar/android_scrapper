@@ -4,42 +4,45 @@ import re
 import sys
 import hashlib
 from datetime import datetime
+
+from markdown_it.rules_inline.backticks import regex
+
 import modules.profiles as profiles
 import modules.chunks as chunk
 import modules.product as product
 import modules.logger as log
 
-d = u2.connect('192.168.56.102:5555')  # connect to device
+d = u2.connect('192.168.56.101:5555')  # connect to device
 print(d.info)
 
-regionId = sys.argv[1]
-taskId = sys.argv[2]
-domain = "magnit.app"
-sessionVar = str(
-    domain + "_" + regionId + "_" + taskId + "_" + str(time.time())
-).encode()
+# regionId = 'moscow'
+# taskId = '11111'
+# domain = "magnit.app"
+# sessionVar = str(
+#     domain + "_" + regionId + "_" + taskId + "_" + str(time.time())
+# ).encode()
+#
+# sessionHash = hashlib.new("sha1")
+# sessionHash.update(sessionVar)
+#
+# sId = sessionHash.hexdigest()[-10:-1]
+#
+# fileName = domain + "_" + regionId + "_" + taskId + "-" + sId
+# sessionDate = str(datetime.now().strftime("%Y-%m-%dT%H:%M:%S")) + "+0300"
+# logger = log.logger(fileName)
+#
+# Product = product.Product(logger)
 
-sessionHash = hashlib.new("sha1")
-sessionHash.update(sessionVar)
-
-sId = sessionHash.hexdigest()[-10:-1]
-
-fileName = domain + "_" + regionId + "_" + taskId + "-" + sId
-sessionDate = str(datetime.now().strftime("%Y-%m-%dT%H:%M:%S")) + "+0300"
-logger = log.logger(fileName)
-
-Product = product.Product(logger)
-
-profile = profiles.get(taskId)
-logger.log(profile)
-sessionId = profile["sessions"][0]["id"]
+# profile = profiles.get(taskId)
+# logger.log(profile)
+# sessionId = profile["sessions"][0]["id"]
 
 progress = 0
 chunkIds = []
 chunkUrl = None
 article = None
 categoryId = 'Алкоголь'
-storeName = profile["storeNames"][0]
+storeName = 'москва тверская 6 1'
 
 
 def store():
@@ -86,7 +89,8 @@ def scrapeCategory():
     for textBlock in d.xpath('//android.widget.ScrollView//android.widget.TextView').all():
         if re.search("товар", textBlock.text):
             textContProducts = textBlock.text
-            countProducts = int(re.sub('\D+', '', textContProducts))
+            regex = '\D+'
+            countProducts = int(re.sub(regex, '', textContProducts))
             swipeCount = int(countProducts / 4)
 
     d.swipe(0, 800, 0, 0, 0.5)
@@ -132,5 +136,7 @@ def main():
     scrapeCategory()
 
 
+
 if __name__ == "__main__":
-    main()
+    # main()
+    d.app_stop_all()

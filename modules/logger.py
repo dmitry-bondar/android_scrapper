@@ -9,7 +9,7 @@ if "--log" in sys.argv:
 class logger():
     def __init__(self, fileName):
         pass
-        logging.basicConfig(filename="/opt/android_scraper/sessions/" + fileName + ".log", encoding='utf-8', level=logging.INFO)
+        logging.basicConfig(filename="/opt/android_scrapper/" + fileName + ".log", encoding='utf-8', level=logging.INFO)
 
     def log(self, string):
         string = str(datetime.now().strftime("%d/%m/%Y %H:%M:%S")) + "   " + str(string)
