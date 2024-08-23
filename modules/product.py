@@ -32,19 +32,14 @@ class Product:
                 discountPrice = re.sub(r",", ".", discountPrice)
                 discountPrice = re.sub(r"[^\d+\.]", "", discountPrice)
                 if discountPrice:
-                    productParams["custom"]["discountPrice"] = str(float(discountPrice))
+                    productParams["discountPrice"] = str(float(discountPrice))
 
             if "specPrice" in productParams and len(productParams["specPrice"]) > 0:
                 specPrice = productParams["specPrice"]
                 specPrice = re.sub(r",", ".", specPrice)
                 specPrice = re.sub(r"[^\d+\.]", "", specPrice)
                 if specPrice:
-                    productParams["custom"]["specPrice"] = str(float(specPrice))
-
-            if "discountPrice" in productParams:
-                del productParams["discountPrice"]
-            if "specPrice" in productParams:
-                del productParams["specPrice"]
+                    productParams["specPrice"] = str(float(specPrice))
 
             productParams["categories"] = list(
                 filter(lambda el: not (re.match(r"Главная|Каталог", el)), productParams["categories"]))
