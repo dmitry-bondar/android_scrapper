@@ -38,7 +38,7 @@ chunkUrl = None
 article = None
 
 d = u2.connect('192.168.56.101:5555')  # connect to device
-logger.log('u2 connect info {0}'.format(d.info) )
+logger.log('u2 connect info {0}'.format(d.info))
 
 
 def store():
@@ -84,7 +84,7 @@ def scrapeCategory(chunk, categoryId):
     for textBlock in d.xpath('//android.widget.ScrollView//android.widget.TextView').all():
         if re.search("товар", textBlock.text):
             textContProducts = textBlock.text
-            reg = re.sub( '\D+', '', textContProducts)
+            reg = re.sub('\D+', '', textContProducts)
             countProducts = int(reg)
             swipeCount = int(countProducts / 4)
 
@@ -112,7 +112,7 @@ def scrapeCategory(chunk, categoryId):
                         "marketId": domain,
                         "regionId": regionId,
                         "source": "App",
-                        "fetchUrl": chunk["url"],
+                        "markdown": "none",
                         "custom": {
                             "rating": countRewievs[0],
                             "reviewsCount": countRewievs[1] if len(countRewievs) > 1 else '',
@@ -125,7 +125,7 @@ def scrapeCategory(chunk, categoryId):
                             "onlineTaskChunkQueryArticle": chunk["queryArticle"] if chunk.get("queryArticle") else None,
                             "onlineTaskChunkArticle": chunk["article"] if chunk.get("article") else None,
                             "onlineTaskChunkUrlArticle": chunk["urlArticle"] if chunk.get("urlArticle") else None,
-                        },
+                        }
                     }, sessionDate)
                 elif len(new_products) == 3:
                     countRewievs = new_products[2].split(' · ')
@@ -138,7 +138,7 @@ def scrapeCategory(chunk, categoryId):
                         "marketId": domain,
                         "regionId": regionId,
                         "source": "App",
-                        "fetchUrl": chunk["url"],
+                        "markdown": "none",
                         "custom": {
                             "rating": countRewievs[0],
                             "reviewsCount": countRewievs[1] if len(countRewievs) > 1 else '',
@@ -151,7 +151,7 @@ def scrapeCategory(chunk, categoryId):
                             "onlineTaskChunkQueryArticle": chunk["queryArticle"] if chunk.get("queryArticle") else None,
                             "onlineTaskChunkArticle": chunk["article"] if chunk.get("article") else None,
                             "onlineTaskChunkUrlArticle": chunk["urlArticle"] if chunk.get("urlArticle") else None,
-                        },
+                        }
                     }, sessionDate)
         if swipeCount <= swipe:
             return True
@@ -164,7 +164,7 @@ def main(chunk):
     openApp()
     store()
     findCategory(categoryId)
-    scrapeCategory(chunk,categoryId)
+    scrapeCategory(chunk, categoryId)
 
 
 while progress < 1:

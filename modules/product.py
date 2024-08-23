@@ -32,7 +32,7 @@ class Product:
                 discountPrice = re.sub(r",", ".", discountPrice)
                 discountPrice = re.sub(r"[^\d+\.]", "", discountPrice)
                 if discountPrice:
-                    productParams["discountPrice"] = str(float(discountPrice))
+                    productParams["discountPrice"] = float(discountPrice)
 
             if "specPrice" in productParams and len(productParams["specPrice"]) > 0:
                 specPrice = productParams["specPrice"]
